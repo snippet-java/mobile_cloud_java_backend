@@ -18,21 +18,23 @@ public class CheckLogin extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().write("hello! , This is java backend for mobile cloud app. Post to /checklogin with user_name and user_password.");	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		response.getWriter().write("hello! , This is java backend for mobile cloud app. "
+								+ "Post to /checklogin with user_name and user_password.");	
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		//Parting the JSON in the request object.
-		//The JSON in converted to a Map using gson library.
+		//The JSON in converted to a Map using GSON library.
 		BufferedReader reader = request.getReader();
 		Map httpRequestData = new Gson().fromJson(reader, Map.class);
 
 		//Get user_name and password_password from the HTTP Request
-		String user_name = (String) httpRequestData.get("user");
-		String user_password = (String) httpRequestData.get("password");
-
+		String user_name = (String) httpRequestData.get("user_name");
+		String user_password = (String) httpRequestData.get("user_password");
+		
 		String responseBody = "";
 		//if the request does not contain user_name
 		// or user_password, the server cannot do much, can it?
@@ -41,7 +43,8 @@ public class CheckLogin extends HttpServlet {
 		}
 		//This condition simply validates the user_name and
 		//user_password against the actual credentials stored in environment variables
-		else if(user_name.equals(System.getenv("APP_USER_NAME")) && user_password.equals(System.getenv("APP_USER_PASSWORD"))) {
+		else if(user_name.equals(System.getenv("APP_USER_NAME")) && 
+				user_password.equals(System.getenv("APP_USER_PASSWORD"))) {
 			//send a success message and also the record shows
 			responseBody = "{\"result\":\"success\", \"description\" : \"You are outstanding\" }";
 		}
@@ -53,5 +56,4 @@ public class CheckLogin extends HttpServlet {
 		response.setContentType("text/html");
 		response.getWriter().write(responseBody);
 	}
-
 }
