@@ -1,0 +1,10 @@
+---
+applications:
+- path: target/MobileCloudJavaBackendDemo-0.0.1-SNAPSHOT.war
+  name: mobile-cloud-java-backend
+  host: mobile-cloud-java-backend-${random-word}
+  memory: 64MB
+  buildpack: liberty-for-java
+  env:
+    APP_USER_NAME: test_username
+    APP_USER_PASSWORD: test_password
