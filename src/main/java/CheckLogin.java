@@ -46,14 +46,14 @@ public class CheckLogin extends HttpServlet {
 		else if(user_name.equals(System.getenv("APP_USER_NAME")) && 
 				user_password.equals(System.getenv("APP_USER_PASSWORD"))) {
 			//send a success message and also the record shows
-			responseBody = "{\"result\":\"success\", \"description\" : \"You are outstanding\" }";
+			responseBody = "{\"result\":\"success\", \"record\" : \"You are outstanding\" }";
 		}
 		else{
 			//well, user name and password did not match the actual credentials,
 			//Send error message with the reason of failure.
 			responseBody = "{\"result\":\"error\", \"description\" : \"Incorrect credentials\" }";
 		}
-		response.setContentType("text/html");
+		response.setContentType("application/json");
 		response.getWriter().write(responseBody);
 	}
 }
