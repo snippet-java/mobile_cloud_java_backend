@@ -6,10 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.google.gson.Gson;
-
-
 @WebServlet("/checklogin")
 public class CheckLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -17,24 +14,18 @@ public class CheckLogin extends HttpServlet {
 	public CheckLogin() {
 		super();
 	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		response.getWriter().write("hello! , This is java backend for mobile cloud app. "
 								+ "Post to /checklogin with user_name and user_password.");	
 	}
 	
-	 /*
-    Function to validate the user credentials
-
+	 /* Function to validate the user credentials
     This function is accessible by the /checklogin URI, relative to the server ip address
-
     The function accepts a "Request" object  sent by any client by POST method. The user credential
     is passed in the body of the request as JSON object.
-
     The function checks the user credential and prepares another JSON object with required data for 
-    client-side processing.
-   */   
+    client-side processing.*/   
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		//Parting the JSON in the request object.
