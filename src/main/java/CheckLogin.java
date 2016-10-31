@@ -23,7 +23,18 @@ public class CheckLogin extends HttpServlet {
 		response.getWriter().write("hello! , This is java backend for mobile cloud app. "
 								+ "Post to /checklogin with user_name and user_password.");	
 	}
+	
+	 /*
+    Function to validate the user credentials
 
+    This function is accessible by the /checklogin URI, relative to the server ip address
+
+    The function accepts a "Request" object  sent by any client by POST method. The user credential
+    is passed in the body of the request as JSON object.
+
+    The function checks the user credential and prepares another JSON object with required data for 
+    client-side processing.
+   */   
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		//Parting the JSON in the request object.
