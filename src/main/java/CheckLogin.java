@@ -33,27 +33,33 @@ public class CheckLogin extends HttpServlet {
 		BufferedReader reader = request.getReader();
 		Map httpRequestData = new Gson().fromJson(reader, Map.class);
 
-		//Get user_name and password_password from the HTTP Request
-		String user_name = (String) httpRequestData.get("user_name");
-		String user_password = (String) httpRequestData.get("user_password");
+		//Get user_name and password_password from the HTTP Request and save them in the variables
+		String provided_user_name = (String) httpRequestData.get("user_name");
+		String provided_user_password = (String) httpRequestData.get("user_password");
+		
+		//Get actual user name and password from environment variables
+		String actual_user_name = System.getenv("APP_USER_NAME");
+		String actual_user_password = System.getenv("APP_USER_PASSWORD");	
+		
 		
 		String responseBody = "";
+		
 		//if the request does not contain user_name
 		// or user_password, the server cannot do much, can it?
-		if(user_name == null || user_password == null) {
+		if(provided_user_name == null || provided_user_password == null) {
 			responseBody = "{\"result\":\"error\", \"description\" : \"Credential missing\" }";
-		}
-		//This condition simply validates the user_name and
-		//user_password against the actual credentials stored in environment variables
-		else if(user_name.equals(System.getenv("APP_USER_NAME")) && 
-				user_password.equals(System.getenv("APP_USER_PASSWORD"))) {
-			//send a success message and also the record shows
-			responseBody = "{\"result\":\"success\", \"record\" : \"You are outstanding\" }";
-		}
-		else{
-			//well, user name and password did not match the actual credentials,
-			//Send error message with the reason of failure.
-			responseBody = "{\"result\":\"error\", \"description\" : \"Incorrect credentials\" }";
+		} else {
+			//If the credentials are valid
+			if(provided_user_name.equals(actual_user_name) && 
+					provided_user_password.equals(actual_user_password)) {
+				//send a success message and also the record shows
+				responseBody = "{\"result\":\"success\", \"record\" : \"You are outstanding\" }";
+			}
+			else{
+				//well, user name and password did not match the actual credentials,
+				//Send error message with the reason of failure.
+				responseBody = "{\"result\":\"error\", \"description\" : \"Incorrect credentials\" }";
+			}
 		}
 		response.setContentType("application/json");
 		response.getWriter().write(responseBody);
